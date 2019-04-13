@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import styles from "./index.less";
 
-export default class CourierList extends PureComponent {
+export default class TabHeader extends PureComponent {
   constructor(props) {
     super(props);
     const { defaultHead } = this.props;

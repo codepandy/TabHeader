@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import "./App.css";
+import styles from "./App.less";
 import TabHeader from "./tabheader";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className={styles.bg}>
         <TabHeader
           defaultHead="abc"
           heardList={[
             { code: "abc", text: "较长的名字数量", num: "10" },
             { code: "abcd", text: "男人", num: "101" },
-            { code: "abce", text: "美女数", num: "121" }
+            { code: "abce1", text: "美女数", num: "121" }
           ]}
           source={[
             {
