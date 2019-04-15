@@ -7,7 +7,7 @@ export default class TabHeader extends PureComponent {
     const { defaultHead } = this.props;
 
     this.state = {
-      containerWidth: 1500,
+      //containerWidth: 1500,
       checkedPosition: 0,
       barWidth: 70,
       checkedHead: defaultHead
@@ -16,15 +16,26 @@ export default class TabHeader extends PureComponent {
 
   componentDidMount() {
     const { heardList } = this.props;
-    let containerWidth = 0;
+    let headerWidth = 0;
+
     (heardList || []).forEach((item, index) => {
-      containerWidth += this[`ref_${index}`].getBoundingClientRect().width;
+      headerWidth += this[`ref_${index}`].getBoundingClientRect().width;
+    });
+    const containerWidth = this.container.getBoundingClientRect().width;
+    let restWidth = 0;
+
+    if (containerWidth > headerWidth) {
+      restWidth = (containerWidth - headerWidth) / heardList.length;
+    }
+
+    (heardList || []).forEach((item, index) => {
+      this[`ref_${index}`].style.width = `${this[
+        `ref_${index}`
+      ].getBoundingClientRect().width + restWidth}px`;
     });
 
-    this.setState({
-      barWidth: this.ref_0.getBoundingClientRect().width,
-      containerWidth
-    });
+    this.ref_0 &&
+      this.setState({ barWidth: this.ref_0.getBoundingClientRect().width });
   }
 
   onClickHeader = (checkedHead, index) => {
@@ -37,17 +48,15 @@ export default class TabHeader extends PureComponent {
   };
 
   render() {
-    const {
-      checkedHead,
-      checkedPosition,
-      containerWidth,
-      barWidth
-    } = this.state;
-    const { heardList, source } = this.props;
+    const { checkedHead, checkedPosition, barWidth } = this.state;
+    const { heardList, source, height } = this.props;
     return (
       <div
         className={styles.container}
-        style={{ width: `${containerWidth}px` }}
+        style={{ height: height ? `${height}px` : "100%" }}
+        ref={r => {
+          this.container = r;
+        }}
       >
         <div className={styles.headerContainer}>
           <div className={styles.header}>
